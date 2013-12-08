@@ -15,10 +15,10 @@ define([
 		grid:null,
 		line_shape:null,
 		movement_bias:'x',
+		tiles:[],
 		
 		init: function()
 		{
-			console.log("hello world 2");
 			var self = this;
 			self.canvas = new createjs.Stage("game_canvas");
 			self.grid = new createjs.Shape();
@@ -29,11 +29,17 @@ define([
 			{
 				self.grid.graphics.moveTo(i*self.tile_size, 0);
 				self.grid.graphics.lineTo(i*self.tile_size, 577);
+				self.tiles[i] = [];
 			}
 			for(var i = 0; i < 50; i++)
 			{
 				self.grid.graphics.moveTo(0, i*self.tile_size);
 				self.grid.graphics.lineTo(944, i*self.tile_size);
+				
+				for(var j = 0; j < 50; j++)
+				{
+					self.tiles[j][i] = {};
+				}
 			}
 				
 			self.line_shape = new createjs.Shape();
@@ -90,6 +96,30 @@ define([
 		{
 			var self = this;
 			self.points.push({x:self.last_move.x, y:self.last_move.y});
+			if(self.points.length > 1)
+			{
+				self.convert_lines_to_tiles(self.points[self.points.length-1], self.points[self.points.length-2]);
+			}
+		},
+		
+		convert_lines_to_tiles:function(start, end)
+		{
+			var self = this;
+			var last_tile = self.tiles[self.get_tile(start.x)][self.get_tile(start.y)];
+			
+			//while()
+			//{
+				last_tile = {start:{x:start.x-self.get_tile(start.x), y:start.y-self.get_tile(start.y)}};
+				var p;
+				if(last_tile.x == 0)
+					p = end.x-start.x
+			//}
+		},
+		
+		get_tile:function(val)
+		{
+			var self = this;
+			return Math.round(val / self.tile_size) * self.tile_size;
 		}
 	});
 	
