@@ -18,7 +18,7 @@ define([
 		
 		init: function()
 		{
-			console.log("hello world");
+			console.log("hello world 2");
 			var self = this;
 			self.canvas = new createjs.Stage("game_canvas");
 			self.grid = new createjs.Shape();
