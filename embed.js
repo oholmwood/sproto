@@ -53,7 +53,8 @@
 	            }
 			});
 			
-			require(['js/sonic/main.js'], function(Main){
+			require(['js/sonic/main.js', 'js/sonic/maths.js'], function(Main, Maths){
 				window.sonic = new Main();
+				maths = new Maths();
 			});
 		});

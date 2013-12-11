@@ -97,7 +97,7 @@ define([
 			var self = this;
 			self.points.push({x:self.last_move.x, y:self.last_move.y});
 			if(self.points.length > 1)
-			{
+			{				
 				self.convert_lines_to_tiles(self.points[self.points.length-1], self.points[self.points.length-2]);
 			}
 		},
@@ -105,15 +105,18 @@ define([
 		convert_lines_to_tiles:function(start, end)
 		{
 			var self = this;
-			var last_tile = self.tiles[self.get_tile(start.x)][self.get_tile(start.y)];
-			
-			//while()
-			//{
-				last_tile = {start:{x:start.x-self.get_tile(start.x), y:start.y-self.get_tile(start.y)}};
-				var p;
-				if(last_tile.x == 0)
-					p = end.x-start.x
-			//}
+			//var last_tile = self.tiles[self.get_tile(start.x)][self.get_tile(start.y)];
+			self.calculate_line_in_tile(start, maths.get_angle_to_point(start.x, end.x, start.y, end.y)-maths.rads(90));
+		},
+		
+		calculate_line_in_tile:function(start, angle)
+		{
+			var self = this;
+			var x = start.x % self.tile_size;
+			var y = start.y % self.tile_size;
+			var xa = (self.tile_size - x) / Math.tan(angle);
+			var ya = (self.tile_size - y) / Math.tan(angle);
+			console.log(x +', '+ y + ', ' + maths.degs(angle) + ', ' + xa + ', ' + ya);
 		},
 		
 		get_tile:function(val)
